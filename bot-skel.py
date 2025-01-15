@@ -18,6 +18,7 @@
 
 import discord
 import os
+import argparse
 from discord.ext import commands
 
 ################################################################################
@@ -112,5 +113,15 @@ async def leave(ctx):
 if __name__ == '__main__':
     if not os.path.exists(MUSIC_DIR):
         os.makedirs(MUSIC_DIR)
-    token=os.getenv("DISCORD_BOT_TOKEN")
+    
+    parser = argparse.ArgumentParser(description="Discord Music Bot")
+    parser.add_argument(
+        "--t", "--token",
+        type=str,
+        help="Discord bot token. If not provided, it will use the DISCORD_BOT_TOKEN environment variable"
+    )
+    args = parser.parse_args()
+
+    token = args.token or os.getenv("DISCORD_BOT_TOKEN")
+
     bot.run(token)
